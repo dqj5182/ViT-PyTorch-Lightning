@@ -1,3 +1,4 @@
+from model.resnet.resnet import ResNet50
 import torch
 import torch.nn as nn
 import torchvision
@@ -34,6 +35,8 @@ def get_model(args):
             head=args.head,
             is_cls_token=args.is_cls_token
             )
+    elif args.model_name == 'resnet':
+        net = ResNet50()
     else:
         raise NotImplementedError(f"{args.model_name} is not implemented yet...")
     return net
