@@ -45,6 +45,8 @@ parser.add_argument("--seed", default=42, type=int)
 parser.add_argument("--project-name", default="VisionTransformer")
 args = parser.parse_args()
 
+
+# Seed and GPU
 torch.manual_seed(args.seed)
 np.random.seed(args.seed)
 args.benchmark = True if not args.off_benchmark else False
@@ -54,13 +56,19 @@ args.is_cls_token = True if not args.off_cls_token else False
 if not args.gpus:
     args.precision=32
 
+
+# For VIT (Error)
 if args.mlp_hidden != args.hidden*4:
     print(f"[INFO] In original paper, mlp_hidden(CURRENT:{args.mlp_hidden}) is set to: {args.hidden*4}(={args.hidden}*4)")
 
+
+# Dataset and Dataloader
 train_ds, test_ds = get_dataset(args)
 train_dl = torch.utils.data.DataLoader(train_ds, batch_size=args.batch_size, shuffle=True, num_workers=args.num_workers, pin_memory=True)
 test_dl = torch.utils.data.DataLoader(test_ds, batch_size=args.eval_batch_size, num_workers=args.num_workers, pin_memory=True)
 
+
+# Training, Validation, and Testing with PyTorch Lightning Module
 class Net(pl.LightningModule):
     def __init__(self, hparams):
         super(Net, self).__init__()
@@ -125,6 +133,7 @@ class Net(pl.LightningModule):
         print("[INFO] LOG IMAGE!!!")
 
 
+# MAIN CODE
 if __name__ == "__main__":
     experiment_name = get_experiment_name(args)
     print(experiment_name)
