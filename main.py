@@ -9,7 +9,7 @@ import warmup_scheduler
 import numpy as np
 
 from utils.utils import get_model, get_dataset, get_experiment_name, get_criterion
-from utils.da import CutMix, MixUp
+from utils.dataaug import CutMix, MixUp
 
 parser = argparse.ArgumentParser()
 # Common args

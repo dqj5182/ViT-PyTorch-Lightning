@@ -4,8 +4,8 @@ import torchvision
 import torchvision.transforms as transforms
 
 from utils.autoaugment import CIFAR10Policy
-from utils.da import RandomCropPaste
-from model.vit import ViT
+from utils.dataaug import RandomCropPaste
+from model.vit.vit import ViT
 
 
 def get_criterion(args):
@@ -19,6 +19,7 @@ def get_criterion(args):
     return criterion
 
 
+# This needs severe change
 def get_model(args):
     if args.model_name == 'vit':
         net = ViT(
