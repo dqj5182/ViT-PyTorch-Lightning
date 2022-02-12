@@ -44,14 +44,11 @@ def get_transform(args):
     train_transform += [
         transforms.RandomCrop(size=args.size, padding=args.padding)
     ]
-    if args.dataset != 'svhn':
-        train_transform += [transforms.RandomHorizontalFlip()]
+    train_transform += [transforms.RandomHorizontalFlip()]
     
     if args.autoaugment:
-        if args.dataset == 'c10' or args.dataset=='c100':
+        if args.dataset == 'c10':
             train_transform.append(CIFAR10Policy())
-        elif args.dataset == 'svhn':
-            train_transform.append(SVHNPolicy())
         else:
             print(f"No AutoAugment for {args.dataset}")   
 
