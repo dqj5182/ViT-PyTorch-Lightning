@@ -28,7 +28,7 @@ Folder Structure
 
 Train the model with CIFAR-10 dataset:
 ```
-python main.py
+python main.py --dataset c10 --label-smoothing --autoaugment --model-name [name of the model]
 ```
 
 </br>
