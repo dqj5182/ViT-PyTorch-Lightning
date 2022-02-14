@@ -3,8 +3,6 @@
 Folder Structure
 ```bash
 .
-├── dataset
-│   └── load_cifar.py
 ├── model
 │   ├── HCGNet
 │   ├── densenet
@@ -15,13 +13,17 @@ Folder Structure
 │   ├── mobilenetV3
 │   ├── resnet
 │   ├── resnext
-│   └── vgg
+│   ├── vgg
+│   └── vit
 ├── notebooks
-│   └── Pretrained_HCGNet.ipynb
+│   └── Pretrained ResNet (VIT Week).ipynb
+├── utils
+│   ├── autoaugment.py
+│   ├── dataaug.py
+│   └── utils.py
+├── weights
 ├── main.py
-├── train_model.py
-├── test_model.py             
-└── utils.py            
+└── setup.sh           
 ```
 
 Train the model with CIFAR-10 dataset:
