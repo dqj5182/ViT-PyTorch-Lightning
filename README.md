@@ -35,9 +35,9 @@ python main.py --dataset c10 --label-smoothing --autoaugment --model-name [name 
 
 ## Pretrained Models
 Epoch: 350
-Model | Pretrained (.pth) | Paper | Accuracy
+Model | Pretrained (.pth) | Notebook | Paper | Accuracy
 --- | --- | --- | ---
-ResNet | Google Drive | [Arxiv](https://arxiv.org/pdf/1512.03385.pdf) | 95.36%
+ResNet | [Google Drive](https://drive.google.com/file/d/1FNsXhHEpEKiZQFgk8vBppmGIABEYXb88/view?usp=sharing) | [Google Colab](https://colab.research.google.com/drive/1NSBEJSnQ4wgt6_bvPPKlbyxASZcZgfH6?usp=sharing) | [Arxiv](https://arxiv.org/pdf/1512.03385.pdf) | 95.36%
 
 </br>
 
