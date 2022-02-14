@@ -199,7 +199,7 @@ class CNNClassifier(pl.LightningModule):
         return {"val_loss": loss, "val_acc": acc}
     
     def validation_epoch_end(self, outputs):
-        avg_loss = torch.stack([x['val loss'] for x in outputs]).mean()
+        avg_loss = torch.stack([x['val_loss'] for x in outputs]).mean()
         tensorboard_logs = {'avg_val_loss': avg_loss}
         return {'val_loss': avg_loss, 'log':tensorboard_logs}
 
