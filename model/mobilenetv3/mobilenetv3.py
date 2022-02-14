@@ -6,7 +6,6 @@ Mobile Networks for Classification, Detection and Segmentation" for more details
 import torch.nn as nn
 import torch.nn.functional as F
 from torch.nn import init
-from utils import ImageClassificationBase
 
 class hswish(nn.Module):
     def forward(self, x):
@@ -70,7 +69,7 @@ class Block(nn.Module):
         return out
 
 
-class MobileNetV3_Large(ImageClassificationBase):
+class MobileNetV3_Large(nn.Module):
     def __init__(self, num_classes=1000):
         super(MobileNetV3_Large, self).__init__()
         self.conv1 = nn.Conv2d(3, 16, kernel_size=3, stride=2, padding=1, bias=False)

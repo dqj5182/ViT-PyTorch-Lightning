@@ -4,7 +4,6 @@ import torch.nn.functional as F
 from collections import OrderedDict
 import numpy as np
 import math
-from utils import ImageClassificationBase
 
 
 class DropBlock2D(nn.Module):
@@ -360,7 +359,7 @@ class _Transition(nn.Module):
 
         #return x
 
-class HCGNet(ImageClassificationBase):
+class HCGNet(nn.Module):
     def __init__(self, growth_rate=(8, 16, 32), block_config=(6,12,24,16),
                  bn_size=4, theta=0.5, num_classes=10):
         super(HCGNet, self).__init__()
@@ -394,13 +393,13 @@ class HCGNet(ImageClassificationBase):
         return out
 
 
-def HCGNet_A1(num_classes=100):
+def HCGNet_A1(num_classes=10):
     return HCGNet(growth_rate=(12, 24, 36), block_config=(8, 8, 8), num_classes=num_classes)
 
 
-def HCGNet_A2(num_classes=100):
+def HCGNet_A2(num_classes=10):
     return HCGNet(growth_rate=(24, 36, 64), block_config=(8, 8, 8), num_classes=num_classes)
 
 
-def HCGNet_A3(num_classes=100):
+def HCGNet_A3(num_classes=10):
     return HCGNet(growth_rate=(36, 48, 80), block_config=(12, 12, 12),num_classes=num_classes)

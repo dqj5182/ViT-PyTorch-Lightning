@@ -2,7 +2,6 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from utils import ImageClassificationBase
 
 
 class Bottleneck(nn.Module):
@@ -36,7 +35,7 @@ class Bottleneck(nn.Module):
         return out
 
 
-class DPN(ImageClassificationBase):
+class DPN(nn.module):
     def __init__(self, cfg):
         super(DPN, self).__init__()
         in_planes, out_planes = cfg['in_planes'], cfg['out_planes']

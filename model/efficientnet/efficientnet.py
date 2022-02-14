@@ -5,7 +5,6 @@ Reference: https://github.com/keras-team/keras-applications/blob/master/keras_ap
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from utils import ImageClassificationBase
 
 
 def swish(x):
@@ -103,7 +102,7 @@ class Block(nn.Module):
         return out
 
 
-class EfficientNet(ImageClassificationBase):
+class EfficientNet(nn.module):
     def __init__(self, cfg, num_classes=10):
         super(EfficientNet, self).__init__()
         self.cfg = cfg
@@ -161,10 +160,3 @@ def EfficientNetB0():
         'drop_connect_rate': 0.2,
     }
     return EfficientNet(cfg)
-
-
-def test():
-    net = EfficientNetB0()
-    x = torch.randn(2, 3, 32, 32)
-    y = net(x)
-    print(y.shape)

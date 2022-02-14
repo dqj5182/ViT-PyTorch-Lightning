@@ -1,3 +1,4 @@
+from model.dpn.dpn import DPN26
 from model.resnet.resnet import ResNet50
 import torch
 import torch.nn as nn
@@ -7,6 +8,16 @@ import torchvision.transforms as transforms
 from utils.autoaugment import CIFAR10Policy
 from utils.dataaug import RandomCropPaste
 from model.vit.vit import ViT
+from model.densenet.densenet import densenet_cifar
+from model.dla.dla import DLA
+from model.dpn.dpn import DPN26, DPN92
+from model.efficientnet.efficientnet import EfficientNetB0
+from model.efficientnetv2.efficientnetv2 import effnetv2_s, effnetv2_m, effnetv2_l, effnetv2_xl
+from model.HCGNet.hcgnet import HCGNet_A1, HCGNet_A2, HCGNet_A3
+from model.mobilenetv3.mobilenetv3 import MobileNetV3_Small, MobileNetV3_Large
+from model.pyramidnet.pyramidnet import pyramidnet164, pyramidnet272
+from model.resnext.resnext import ResNeXt29_2x64d, ResNeXt29_4x64d, ResNeXt29_8x64d, ResNeXt29_32x4d
+from model.vgg.vgg import VGG
 
 
 def get_criterion(args):
@@ -35,8 +46,28 @@ def get_model(args):
             head=args.head,
             is_cls_token=args.is_cls_token
             )
+    elif args.model_name == 'densenet':
+        net = densenet_cifar()
+    elif args.model_name == 'dla':
+        net = DLA()
+    elif args.model_name == 'dpn':
+        net = DPN26()
+    elif args.model_name == 'efficientnet':
+        net = EfficientNetB0()
+    elif args.model_name == 'efficientnetv2':
+        net = effnetv2_s()
+    elif args.model_name == 'hcgnet':
+        net = HCGNet_A1()
+    elif args.model_name == 'mobilenetv3':
+        net = MobileNetV3_Small()
+    elif args.model_name == 'pyramidnet':
+        net = pyramidnet164()
     elif args.model_name == 'resnet':
-        net = ResNet50()
+        net = ResNet50()    
+    elif args.model_name == 'resnext':
+        net = ResNeXt29_2x64d()
+    elif args.model_name == 'vgg':
+        net = VGG('VGG11')
     else:
         raise NotImplementedError(f"{args.model_name} is not implemented yet...")
     print("get model() called", args.model_name)

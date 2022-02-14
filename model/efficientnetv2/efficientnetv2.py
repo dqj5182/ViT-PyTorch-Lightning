@@ -9,7 +9,6 @@ import from https://github.com/d-li14/mobilenetv2.pytorch
 import torch
 import torch.nn as nn
 import math
-from utils import ImageClassificationBase
 
 __all__ = ['effnetv2_s', 'effnetv2_m', 'effnetv2_l', 'effnetv2_xl']
 
@@ -119,7 +118,7 @@ class MBConv(nn.Module):
             return self.conv(x)
 
 
-class EffNetV2(ImageClassificationBase):
+class EffNetV2(nn.Module):
     def __init__(self, cfgs, num_classes=1000, width_mult=1.):
         super(EffNetV2, self).__init__()
         self.cfgs = cfgs

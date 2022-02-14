@@ -1,7 +1,6 @@
 '''VGG11/13/16/19 in Pytorch.'''
 import torch
 import torch.nn as nn
-from utils import ImageClassificationBase
 
 
 cfg = {
@@ -12,7 +11,7 @@ cfg = {
 }
 
 
-class VGG(ImageClassificationBase):
+class VGG(nn.Module):
     def __init__(self, vgg_name):
         super(VGG, self).__init__()
         self.features = self._make_layers(cfg[vgg_name])

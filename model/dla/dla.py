@@ -1,7 +1,6 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from utils import ImageClassificationBase
 
 
 class BasicBlock(nn.Module):
@@ -78,7 +77,7 @@ class Tree(nn.Module):
         return out
 
 
-class DLA(ImageClassificationBase):
+class DLA(nn.Module):
     def __init__(self, block=BasicBlock, num_classes=10):
         super(DLA, self).__init__()
         self.base = nn.Sequential(

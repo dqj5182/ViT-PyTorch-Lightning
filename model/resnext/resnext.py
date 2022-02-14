@@ -5,7 +5,6 @@ See the paper "Aggregated Residual Transformations for Deep Neural Networks" for
 import torch.nn as nn
 from torch.nn import init
 import torch.nn.functional as F
-from utils import ImageClassificationBase
 
 class Block(nn.Module):
     '''Grouped convolution block.'''
@@ -37,7 +36,7 @@ class Block(nn.Module):
         return out
 
 
-class ResNeXt(ImageClassificationBase):
+class ResNeXt(nn.Module):
     def __init__(self, num_blocks, cardinality, bottleneck_width, num_classes=10):
         super(ResNeXt, self).__init__()
         self.cardinality = cardinality

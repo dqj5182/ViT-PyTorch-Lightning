@@ -4,7 +4,6 @@ import math
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from utils import ImageClassificationBase
 
 
 class Bottleneck(nn.Module):
@@ -34,7 +33,7 @@ class Transition(nn.Module):
         return out
 
 
-class DenseNet(ImageClassificationBase):
+class DenseNet(nn.Module):
     def __init__(self, block, nblocks, growth_rate=12, reduction=0.5, num_classes=10):
         super(DenseNet, self).__init__()
         self.growth_rate = growth_rate

@@ -15,7 +15,6 @@ import math
 import torch
 import torch.nn as nn
 from torch.autograd import Variable
-from utils import ImageClassificationBase
 
 __all__ = ['pyramidnet272', 'pyramidnet164']
 
@@ -190,7 +189,7 @@ class Bottleneck(nn.Module):
 		return out
 
 
-class PyramidNet(ImageClassificationBase):
+class PyramidNet(nn.Module):
 	def __init__(self, dataset='cifar10',
 						bottleneck=True,
 						depth=272,
