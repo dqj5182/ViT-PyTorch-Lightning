@@ -70,9 +70,9 @@ test_dl = torch.utils.data.DataLoader(test_ds, batch_size=args.eval_batch_size, 
 
 
 # Training, Validation, and Testing with PyTorch Lightning Module
-class Net(pl.LightningModule):
+class VITClassifier(pl.LightningModule):
     def __init__(self, hparams):
-        super(Net, self).__init__()
+        super(VITClassifier, self).__init__()
         self.hparams.update(vars(hparams))
         self.model = get_model(hparams)
         self.criterion = get_criterion(args)
@@ -144,7 +144,10 @@ if __name__ == "__main__":
         name=experiment_name
     )
     refresh_rate = 1
-    net = Net(args)
+
+    if args.model_name == 'vit':
+        net = VITClassifier(args)
+
     trainer = pl.Trainer(precision=args.precision,fast_dev_run=args.dry_run, gpus=args.gpus, benchmark=args.benchmark, logger=logger, max_epochs=args.max_epochs, weights_summary="full", progress_bar_refresh_rate=refresh_rate)
     trainer.fit(model=net, train_dataloader=train_dl, val_dataloaders=test_dl)
     if not args.dry_run:
