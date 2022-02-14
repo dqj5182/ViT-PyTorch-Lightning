@@ -67,7 +67,7 @@ def get_model(args):
     elif args.model_name == 'resnext':
         net = ResNeXt29_2x64d()
     elif args.model_name == 'vgg':
-        net = VGG('VGG11')
+        net = VGG('VGG19')
     else:
         raise NotImplementedError(f"{args.model_name} is not implemented yet...")
     print("get model() called", args.model_name)
