@@ -35,13 +35,9 @@ python main.py --dataset c10 --label-smoothing --autoaugment --model-name [name 
 
 ## Pretrained Models
 Epoch: 350
-Model | Pretrained (.pth) | Paper | Accuracy | Architecture
---- | --- | --- | --- | ---
-HCGNet | [Google Drive](https://drive.google.com/file/d/11SvHuhBjHElmlp80dIJn0AokisiewLNd/view?usp=sharing) | [Arxiv](https://arxiv.org/pdf/1908.09699.pdf) | 91.92% | hybrid (dense, residual) connectivity, micro-module and attention-based forget and update gates
-DenseNet | [Google Drive](https://drive.google.com/file/d/14-y22orjDvQJBPm6vYiMnDP3FLYYzAcH/view?usp=sharing) | [Arxiv](https://arxiv.org/pdf/1608.06993.pdf) | 90.18% | identity mappings, deep supervision, and diversified depth
-PyramidNet | [Google Drive](https://drive.google.com/file/d/1Ln7e7n6KIN8xYTBPHR43H_Uh07AEt7LC/view?usp=sharing) | [Arxiv](https://arxiv.org/pdf/1610.02915.pdf) | 89.89% | increasing the feature map dimension gradually
-ResNeXT | [Google Drive](https://drive.google.com/file/d/1HAS2WeF1i8IwaiRMFA_xFBqmi6fAlip4/view?usp=sharing) | [Arxiv](https://arxiv.org/pdf/1611.05431.pdf) | 89.51% | aggregates a set of transformations with the same topology
-DPN | [Google Drive](https://drive.google.com/file/d/1W6EZ-caNd9N6m7eIRzl-cx5N2RUDUh14/view?usp=sharing) | [Arxiv](https://arxiv.org/pdf/1707.01629.pdf) | 89.25% | integrate feature re-usage (ResNet) and new features exploration (DenseNet)
+Model | Pretrained (.pth) | Paper | Accuracy
+--- | --- | --- | ---
+ResNet | Google Drive | [Arxiv](https://arxiv.org/pdf/1512.03385.pdf) | 95.36%
 
 </br>
 
