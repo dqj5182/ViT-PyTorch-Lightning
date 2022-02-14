@@ -20,14 +20,14 @@ parser.add_argument("--model-name", default="vit", help="[vit]", type=str) # vit
 parser.add_argument("--patch", default=8, type=int)
 parser.add_argument("--batch-size", default=128, type=int)
 parser.add_argument("--eval-batch-size", default=1024, type=int)
-parser.add_argument("--lr", default=1e-3, type=float)
+parser.add_argument("--lr", default=3e-3, type=float)
 parser.add_argument("--min-lr", default=1e-5, type=float)
 parser.add_argument("--beta1", default=0.9, type=float)
 parser.add_argument("--beta2", default=0.999, type=float)
 parser.add_argument("--off-benchmark", action="store_true")
-parser.add_argument("--max-epochs", default=200, type=int)
+parser.add_argument("--max-epochs", default=350, type=int)
 parser.add_argument("--dry-run", action="store_true")
-parser.add_argument("--weight-decay", default=5e-5, type=float)
+parser.add_argument("--weight-decay", default=3e-1, type=float)
 parser.add_argument("--warmup-epoch", default=5, type=int)
 parser.add_argument("--precision", default=16, type=int)
 parser.add_argument("--autoaugment", action="store_true")
@@ -37,7 +37,7 @@ parser.add_argument("--smoothing", default=0.1, type=float)
 parser.add_argument("--rcpaste", action="store_true")
 parser.add_argument("--cutmix", action="store_true")
 parser.add_argument("--mixup", action="store_true")
-parser.add_argument("--dropout", default=0.0, type=float)
+parser.add_argument("--dropout", default=0.1, type=float)
 parser.add_argument("--head", default=12, type=int)
 parser.add_argument("--num-layers", default=7, type=int)
 parser.add_argument("--hidden", default=384, type=int)
@@ -114,7 +114,7 @@ class VITClassifier(pl.LightningModule):
 
         acc = torch.eq(out.argmax(-1), label).float().mean()
         self.log("loss", loss)
-        self.log("acc", acc)
+        self.log("acc", acc, prog_bar=True, on_step=False, on_epoch=True)
         return loss
 
     def training_epoch_end(self, outputs):
@@ -124,9 +124,9 @@ class VITClassifier(pl.LightningModule):
         img, label = batch
         out = self(img)
         loss = self.criterion(out, label)
-        acc = torch.eq(out.argmax(-1), label).float().mean()
+        val_acc = torch.eq(out.argmax(-1), label).float().mean()
         self.log("val_loss", loss)
-        self.log("val_acc", acc)
+        self.log("val_acc", val_acc, prog_bar=True, on_step=False, on_epoch=True)
         return loss
 
     def _log_image(self, image):
@@ -184,7 +184,7 @@ class CNNClassifier(pl.LightningModule):
         self.log("acc", acc)
 
         tensorboard_logs = {'train_loss': loss}
-        return {"loss": loss, "acc": acc, "log": tensorboard_logs}
+        return {"loss": loss, "acc": acc}
 
     def training_epoch_end(self, outputs):
         self.log("lr", self.optimizer.param_groups[0]["lr"], on_epoch=self.current_epoch)
@@ -194,12 +194,12 @@ class CNNClassifier(pl.LightningModule):
         out = self(img)
         loss = self.criterion(out, label)
         acc = torch.eq(out.argmax(-1), label).float().mean()
-        self.log("val_loss", loss)
-        self.log("val_acc", acc)
+        self.log("val_loss", loss, prog_bar=True, on_step=False, on_epoch=True)
+        self.log("val_acc", acc, prog_bar=True)
         return {"val_loss": loss, "val_acc": acc}
     
     def validation_epoch_end(self, outputs):
-        avg_loss = torch.stack([x['val_loss'] for x in outputs]).mean()
+        avg_loss = torch.stack([x['val loss'] for x in outputs]).mean()
         tensorboard_logs = {'avg_val_loss': avg_loss}
         return {'val_loss': avg_loss, 'log':tensorboard_logs}
 
@@ -220,7 +220,7 @@ if __name__ == "__main__":
         save_dir="logs",
         name=experiment_name
     )
-    refresh_rate = 1
+    refresh_rate = 10
 
     if args.model_name == 'vit':
         net = VITClassifier(args)
