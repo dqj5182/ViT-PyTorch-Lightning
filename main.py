@@ -137,10 +137,10 @@ class VITClassifier(pl.LightningModule):
 
 
 
-# ResNet: Training, Validation, and Testing with PyTorch Lightning Module
-class ResNetClassifier(pl.LightningModule):
+# CNN based Models (i.e., ResNet, VGG): Training, Validation, and Testing with PyTorch Lightning Module
+class CNNClassifier(pl.LightningModule):
     def __init__(self, hparams):
-        super(ResNetClassifier, self).__init__()
+        super(CNNClassifier, self).__init__()
         self.hparams.update(vars(hparams))
         self.model = get_model(hparams)
         self.criterion = get_criterion(args)
@@ -225,7 +225,7 @@ if __name__ == "__main__":
     if args.model_name == 'vit':
         net = VITClassifier(args)
     else:
-        net = ResNetClassifier(args)
+        net = CNNClassifier(args)
 
     trainer = pl.Trainer(precision=args.precision,fast_dev_run=args.dry_run, gpus=args.gpus, benchmark=args.benchmark, logger=logger, max_epochs=args.max_epochs, weights_summary="full", progress_bar_refresh_rate=refresh_rate)
     trainer.fit(model=net, train_dataloader=train_dl, val_dataloaders=test_dl)
