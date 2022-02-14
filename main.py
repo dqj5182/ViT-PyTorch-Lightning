@@ -25,7 +25,7 @@ parser.add_argument("--min-lr", default=1e-5, type=float)
 parser.add_argument("--beta1", default=0.9, type=float)
 parser.add_argument("--beta2", default=0.999, type=float)
 parser.add_argument("--off-benchmark", action="store_true")
-parser.add_argument("--max-epochs", default=2, type=int)
+parser.add_argument("--max-epochs", default=200, type=int)
 parser.add_argument("--dry-run", action="store_true")
 parser.add_argument("--weight-decay", default=5e-5, type=float)
 parser.add_argument("--warmup-epoch", default=5, type=int)
@@ -182,7 +182,9 @@ class ResNetClassifier(pl.LightningModule):
         acc = torch.eq(out.argmax(-1), label).float().mean()
         self.log("loss", loss)
         self.log("acc", acc)
-        return loss
+
+        tensorboard_logs = {'train_loss': loss}
+        return {"loss": loss, "acc": acc, "log": tensorboard_logs}
 
     def training_epoch_end(self, outputs):
         self.log("lr", self.optimizer.param_groups[0]["lr"], on_epoch=self.current_epoch)
@@ -194,7 +196,12 @@ class ResNetClassifier(pl.LightningModule):
         acc = torch.eq(out.argmax(-1), label).float().mean()
         self.log("val_loss", loss)
         self.log("val_acc", acc)
-        return loss
+        return {"val_loss": loss, "val_acc": acc}
+    
+    def validation_epoch_end(self, outputs):
+        avg_loss = torch.stack([x['val loss'] for x in outputs]).mean()
+        tensorboard_logs = {'avg_val_loss': avg_loss}
+        return {'val_loss': avg_loss, 'log':tensorboard_logs}
 
     def _log_image(self, image):
         grid = torchvision.utils.make_grid(image, nrow=4)
