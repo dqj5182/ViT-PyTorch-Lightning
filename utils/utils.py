@@ -39,6 +39,7 @@ def get_model(args):
         net = ResNet50()
     else:
         raise NotImplementedError(f"{args.model_name} is not implemented yet...")
+    print("get model() called", args.model_name)
     return net
 
 
