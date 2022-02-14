@@ -102,7 +102,7 @@ class Block(nn.Module):
         return out
 
 
-class EfficientNet(nn.module):
+class EfficientNet(nn.Module):
     def __init__(self, cfg, num_classes=10):
         super(EfficientNet, self).__init__()
         self.cfg = cfg

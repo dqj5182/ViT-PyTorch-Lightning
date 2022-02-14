@@ -35,7 +35,7 @@ class Bottleneck(nn.Module):
         return out
 
 
-class DPN(nn.module):
+class DPN(nn.Module):
     def __init__(self, cfg):
         super(DPN, self).__init__()
         in_planes, out_planes = cfg['in_planes'], cfg['out_planes']

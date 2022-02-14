@@ -16,7 +16,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument("--api-key", help="API Key for Comet.ml")
 parser.add_argument("--dataset", default="c10", type=str, help="[c10, c100, svhn]")
 parser.add_argument("--num-classes", default=10, type=int)
-parser.add_argument("--model-name", default="resnet", help="[vit]", type=str) # vit or resnet
+parser.add_argument("--model-name", default="vit", help="[vit]", type=str) # vit or resnet
 parser.add_argument("--patch", default=8, type=int)
 parser.add_argument("--batch-size", default=128, type=int)
 parser.add_argument("--eval-batch-size", default=1024, type=int)
