@@ -37,6 +37,7 @@ python main.py --dataset c10 --label-smoothing --autoaugment --model-name [name 
 Epoch: 350
 Model | Pretrained (.pth) | Notebook | Paper | Accuracy
 --- | --- | --- | --- | ---
+Vision Transformer | [Google Drive](https://drive.google.com/file/d/14E9-efY8Z8qvg8QoyEl0m20FMGRt2g8P/view?usp=sharing) | [Google Colab](https://colab.research.google.com/drive/1faGg8XctN22cFthUa_8MdhsqgDrPh7xZ?usp=sharing) | [Arxiv](https://arxiv.org/pdf/2010.11929.pdf) | 89.72%
 ResNet | [Google Drive](https://drive.google.com/file/d/1FNsXhHEpEKiZQFgk8vBppmGIABEYXb88/view?usp=sharing) | [Google Colab](https://colab.research.google.com/drive/1NSBEJSnQ4wgt6_bvPPKlbyxASZcZgfH6?usp=sharing) | [Arxiv](https://arxiv.org/pdf/1512.03385.pdf) | 95.36%
 
 </br>
