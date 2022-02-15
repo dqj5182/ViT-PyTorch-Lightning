@@ -49,12 +49,3 @@ class MultiHeadSelfAttention(nn.Module):
         attn = torch.einsum("bhij, bhjf->bihf", score, v) #(b,n,h,f//h)
         o = self.dropout(self.o(attn.flatten(2)))
         return o
-
-class MultiHeadDepthwiseSelfAttention(nn.Module):
-    def __init__(self, feats:int, head:int=8, dropout:float=0):
-        super(MultiHeadDepthwiseSelfAttention, self).__init__()
-        ...
-
-    def forward(self, x):
-        
-        ...
