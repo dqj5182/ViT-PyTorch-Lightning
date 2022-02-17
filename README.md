@@ -32,12 +32,14 @@ python main.py --dataset c10 --label-smoothing --autoaugment --model-name [name 
 ```
 </br>
 </br>
+
 Train VIT model with CIFAR-10 dataset (default):
 ```
 python main.py --dataset c10 --label-smoothing --autoaugment
 ```
 </br>
 </br>
+
 Train ResNet model with CIFAR-10 dataset:
 ```
 python main.py --dataset c10 --label-smoothing --autoaugment --model-name resnet
