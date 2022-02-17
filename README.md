@@ -50,11 +50,6 @@ VGG-11 | [Google Drive](https://drive.google.com/file/d/1h4C4WQHqVhGOHKyCkk41unA
 
 ## Reference
 Most of the codes for VIT models, training, and testing is from [ViT-CIFAR repo](https://github.com/omihub777/ViT-CIFAR) by [omihub777](https://github.com/omihub777)</br>
-https://pytorch.org/tutorials/beginner/blitz/cifar10_tutorial.html</br>
-https://github.com/lukemelas/EfficientNet-PyTorch</br>
-https://github.com/facebookresearch/LaMCTS</br>
-https://github.com/kekmodel/MPL-pytorch</br>
-https://github.com/MadryLab/cifar10_challenge</br>
-https://github.com/xiaolai-sqlai/mobilenetv3</br>
-https://github.com/EN10/CIFAR</br>
-https://medium.com/@sergioalves94/deep-learning-in-pytorch-with-cifar-10-dataset-858b504a6b54</br>
+EfficientNet from [EfficientNet-PyTorch repo](https://github.com/lukemelas/EfficientNet-PyTorch) by [lukemelas](https://github.com/lukemelas)</br>
+MobileNetV3 from [mobilenetv3 repo](https://github.com/xiaolai-sqlai/mobilenetv3) by [xiaolai-sqlai](https://github.com/xiaolai-sqlai)</br>
+Most of the other models from [pytorch-cifar repo](https://github.com/kuangliu/pytorch-cifar) by [kuangliu](https://github.com/kuangliu/pytorch-cifar)
