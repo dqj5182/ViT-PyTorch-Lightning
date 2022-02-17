@@ -45,6 +45,7 @@ CUDA_VISIBLE_DEVICES=0 python main.py --dataset c10 --label-smoothing --autoaugm
 </br>
 CUDA_VISIBLE_DEVICES=0 means that we are assigning GPU0 to be our CUDA device
 </br>
+
 ## Pretrained Models
 Epoch: 200 (CNN based), Epoch: 350 (VIT)
 Model | Pretrained (.pth) | Notebook | Paper | Accuracy
