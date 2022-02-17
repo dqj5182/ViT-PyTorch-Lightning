@@ -49,6 +49,7 @@ VGG-11 | [Google Drive](https://drive.google.com/file/d/1h4C4WQHqVhGOHKyCkk41unA
 
 
 ## Reference
+Most of the codes for VIT models, training, and testing is from [ViT-CIFAR repo](https://github.com/omihub777/ViT-CIFAR) by [omihub777](https://github.com/omihub777)</br>
 https://pytorch.org/tutorials/beginner/blitz/cifar10_tutorial.html</br>
 https://github.com/lukemelas/EfficientNet-PyTorch</br>
 https://github.com/facebookresearch/LaMCTS</br>
