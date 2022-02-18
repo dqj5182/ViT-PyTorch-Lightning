@@ -4,24 +4,22 @@ import torch.nn as nn
 from model.vit.layers import TransformerEncoder
 
 class ViT(nn.Module):
-    def __init__(self, in_c:int=3, num_classes:int=10, img_size:int=32, patch:int=8, dropout:float=0., num_layers:int=7, hidden:int=384, mlp_hidden:int=384*4, head:int=8, is_cls_token:bool=True):
+    def __init__(self, in_c:int=3, num_classes:int=10, img_size:int=32, num_patch_1d:int=8, dropout:float=0., num_layers:int=7, hidden_dim:int=384, mlp_hidden_dim:int=384*4, num_head:int=8, is_cls_token:bool=True):
         super(ViT, self).__init__()
-        # hidden=384
-
-        self.patch = patch # number of patches in one row(or col)
         self.is_cls_token = is_cls_token
-        self.patch_size = img_size//self.patch
-        f = (img_size//self.patch)**2*3 # 48 # patch vec length
-        num_tokens = (self.patch**2)+1 if self.is_cls_token else (self.patch**2)
+        self.num_patch_1d = num_patch_1d # number of patches in one row (or col), 3 in Figure 1 of the paper, 8 in this experiment
+        self.patch_size = img_size//self.num_patch_1d # 1d size (size of row or col) of each patch, 16 for ImageNet in the paper, 4 in this experiment
+        flattened_patch_dim = (img_size//self.num_patch_1d)**2*3 # 48 # Flattened vec length for each patch (4 x 4 x 3, each side is 4 and 3 color scheme)
+        num_tokens = (self.num_patch_1d**2)+1 if self.is_cls_token else (self.num_patch_1d**2) # number of total patches + 1 (class token), 10 in the paper, 65 in this experiment
 
-        self.emb = nn.Linear(f, hidden) # (b, n, f)
-        self.cls_token = nn.Parameter(torch.randn(1, 1, hidden)) if is_cls_token else None
-        self.pos_emb = nn.Parameter(torch.randn(1,num_tokens, hidden))
-        enc_list = [TransformerEncoder(hidden,mlp_hidden=mlp_hidden, dropout=dropout, head=head) for _ in range(num_layers)]
+        self.emb = nn.Linear(flattened_patch_dim, hidden_dim) # (b, n, f)
+        self.cls_token = nn.Parameter(torch.randn(1, 1, hidden_dim)) if is_cls_token else None
+        self.pos_emb = nn.Parameter(torch.randn(1,num_tokens, hidden_dim))
+        enc_list = [TransformerEncoder(hidden_dim, mlp_hidden_dim=mlp_hidden_dim, dropout=dropout, num_head=num_head) for _ in range(num_layers)]
         self.enc = nn.Sequential(*enc_list) # * should be adeed if given regular python list to nn.Sequential
         self.fc = nn.Sequential(
-            nn.LayerNorm(hidden),
-            nn.Linear(hidden, num_classes) # for cls_token
+            nn.LayerNorm(hidden_dim),
+            nn.Linear(hidden_dim, num_classes) # for cls_token
         )
 
     def forward(self, x):
@@ -43,5 +41,5 @@ class ViT(nn.Module):
         (b, c, h, w) -> (b, n, f)
         """
         out = x.unfold(2, self.patch_size, self.patch_size).unfold(3, self.patch_size, self.patch_size).permute(0,2,3,4,5,1)
-        out = out.reshape(x.size(0), self.patch**2 ,-1)
+        out = out.reshape(x.size(0), self.num_patch_1d**2 ,-1)
         return out

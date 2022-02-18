@@ -35,15 +35,15 @@ def get_criterion(args):
 def get_model(args):
     if args.model_name == 'vit':
         net = ViT(
-            args.in_c, 
-            args.num_classes, 
+            in_c = args.in_c, 
+            num_classes = args.num_classes, 
             img_size=args.size, 
-            patch=args.patch, 
+            num_patch_1d=args.patch, 
             dropout=args.dropout, 
-            mlp_hidden=args.mlp_hidden,
+            mlp_hidden_dim=args.mlp_hidden,
             num_layers=args.num_layers,
-            hidden=args.hidden,
-            head=args.head,
+            hidden_dim=args.hidden,
+            num_head=args.head,
             is_cls_token=args.is_cls_token
             )
     elif args.model_name == 'densenet':
