@@ -12,11 +12,18 @@ class ViT(nn.Module):
         flattened_patch_dim = (img_size//self.num_patch_1d)**2*3 # 48 # Flattened vec length for each patch (4 x 4 x 3, each side is 4 and 3 color scheme)
         num_tokens = (self.num_patch_1d**2)+1 if self.is_cls_token else (self.num_patch_1d**2) # number of total patches + 1 (class token), 10 in the paper, 65 in this experiment
 
-        self.emb = nn.Linear(flattened_patch_dim, hidden_dim) # (b, n, f)
-        self.cls_token = nn.Parameter(torch.randn(1, 1, hidden_dim)) if is_cls_token else None
-        self.pos_emb = nn.Parameter(torch.randn(1,num_tokens, hidden_dim))
+        # Linear Projection of Flattened Patches
+        self.lpfp = nn.Linear(flattened_patch_dim, hidden_dim)
+
+        # Patch + Position Embedding
+        self.cls_token = nn.Parameter(torch.randn(1, 1, hidden_dim)) if is_cls_token else None # learnable classification token with dim [1, 1, 384]
+        self.pos_emb = nn.Parameter(torch.randn(1, num_tokens, hidden_dim)) # learnable positional embedding with dim [1, 65, 384]
+        
+        # Transformer Encoder
         enc_list = [TransformerEncoder(hidden_dim, mlp_hidden_dim=mlp_hidden_dim, dropout=dropout, num_head=num_head) for _ in range(num_layers)]
         self.enc = nn.Sequential(*enc_list) # * should be adeed if given regular python list to nn.Sequential
+        
+        # MLP Head
         self.fc = nn.Sequential(
             nn.LayerNorm(hidden_dim),
             nn.Linear(hidden_dim, num_classes) # for cls_token
@@ -24,7 +31,7 @@ class ViT(nn.Module):
 
     def forward(self, x):
         out = self._to_words(x)
-        out = self.emb(out)
+        out = self.lpfp(out)
         if self.is_cls_token:
             out = torch.cat([self.cls_token.repeat(out.size(0),1,1), out],dim=1)
         out = out + self.pos_emb
