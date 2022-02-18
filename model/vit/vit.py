@@ -1,6 +1,5 @@
 import torch
 import torch.nn as nn
-import torchsummary
 
 from model.vit.layers import TransformerEncoder
 
@@ -19,7 +18,7 @@ class ViT(nn.Module):
         self.cls_token = nn.Parameter(torch.randn(1, 1, hidden)) if is_cls_token else None
         self.pos_emb = nn.Parameter(torch.randn(1,num_tokens, hidden))
         enc_list = [TransformerEncoder(hidden,mlp_hidden=mlp_hidden, dropout=dropout, head=head) for _ in range(num_layers)]
-        self.enc = nn.Sequential(*enc_list)
+        self.enc = nn.Sequential(*enc_list) # * should be adeed if given regular python list to nn.Sequential
         self.fc = nn.Sequential(
             nn.LayerNorm(hidden),
             nn.Linear(hidden, num_classes) # for cls_token
