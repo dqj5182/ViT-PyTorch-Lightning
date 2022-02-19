@@ -4,7 +4,7 @@ import torch.nn as nn
 from model.vit.layers import TransformerEncoder
 
 class ViT(nn.Module):
-    def __init__(self, in_c:int=3, num_classes:int=10, img_size:int=32, num_patch_1d:int=8, dropout:float=0., num_layers:int=7, hidden_dim:int=384, mlp_hidden_dim:int=384*4, num_head:int=8, is_cls_token:bool=True):
+    def __init__(self, in_c:int=3, num_classes:int=10, img_size:int=32, num_patch_1d:int=8, dropout:float=0., num_enc_layers:int=7, hidden_dim:int=384, mlp_hidden_dim:int=384*4, num_head:int=8, is_cls_token:bool=True):
         super(ViT, self).__init__()
         self.is_cls_token = is_cls_token
         self.num_patch_1d = num_patch_1d # number of patches in one row (or col), 3 in Figure 1 of the paper, 8 in this experiment
@@ -16,17 +16,17 @@ class ViT(nn.Module):
         self.lpfp = nn.Linear(flattened_patch_dim, hidden_dim)
 
         # Patch + Position Embedding
-        self.cls_token = nn.Parameter(torch.randn(1, 1, hidden_dim)) if is_cls_token else None # learnable classification token with dim [1, 1, 384]
+        self.cls_token = nn.Parameter(torch.randn(1, 1, hidden_dim)) if is_cls_token else None # learnable classification token with dim [1, 1, 384]. 1 in 2nd dim because there is only one class per each image not each patch
         self.pos_emb = nn.Parameter(torch.randn(1, num_tokens, hidden_dim)) # learnable positional embedding with dim [1, 65, 384]
         
         # Transformer Encoder
-        enc_list = [TransformerEncoder(hidden_dim, mlp_hidden_dim=mlp_hidden_dim, dropout=dropout, num_head=num_head) for _ in range(num_layers)]
+        enc_list = [TransformerEncoder(hidden_dim, mlp_hidden_dim=mlp_hidden_dim, dropout=dropout, num_head=num_head) for _ in range(num_enc_layers)] # num_enc_layers is L in Transformer Encoder at Figure 1
         self.enc = nn.Sequential(*enc_list) # * should be adeed if given regular python list to nn.Sequential
         
-        # MLP Head
-        self.fc = nn.Sequential(
+        # MLP Head (Standard Classifier)
+        self.mlp_head = nn.Sequential(
             nn.LayerNorm(hidden_dim),
-            nn.Linear(hidden_dim, num_classes) # for cls_token
+            nn.Linear(hidden_dim, num_classes)
         )
 
     def forward(self, x):
@@ -40,11 +40,12 @@ class ViT(nn.Module):
             out = out[:,0]
         else:
             out = out.mean(1)
-        out = self.fc(out)
+        out = self.mlp_head(out)
         return out
 
     def _to_words(self, x):
         """
+        b: batch, c: color, h: height, w: width, n: number of words in a sentence, f: feature (embbeding dim)
         (b, c, h, w) -> (b, n, f)
         """
         out = x.unfold(2, self.patch_size, self.patch_size).unfold(3, self.patch_size, self.patch_size).permute(0,2,3,4,5,1)

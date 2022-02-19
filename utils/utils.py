@@ -41,7 +41,7 @@ def get_model(args):
             num_patch_1d=args.patch, 
             dropout=args.dropout, 
             mlp_hidden_dim=args.mlp_hidden,
-            num_layers=args.num_layers,
+            num_enc_layers=args.num_layers,
             hidden_dim=args.hidden,
             num_head=args.head,
             is_cls_token=args.is_cls_token
