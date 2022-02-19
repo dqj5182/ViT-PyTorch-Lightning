@@ -79,8 +79,8 @@ class MultiHeadSelfAttention(nn.Module):
         value = self.ll_value(input).view(batch, num_token, self.num_head, self.input_dim//self.num_head).transpose(1,2) # [batch, self.num_head, num_token, self.input_dim//self.num_head]
 
         # Scaled Dot-Product Attention
-        score = F.softmax(torch.einsum("bhtf, bhjf->bhtj", query, key)/self.sqrt_dim, dim=-1) #(b,h,n,n)
-        attn = torch.einsum("bhij, bhjf->bihf", score, value) #(b,n,h,f//h)
+        attn_score = F.softmax(torch.einsum("bhtf, bhjf->bhtj", query, key)/self.sqrt_dim, dim=-1) #(b,h,n,n)
+        attn = torch.einsum("bhij, bhjf->bihf", attn_score, value) #(b,n,h,f//h)
 
         # Concat and Linear
         out = self.dropout(self.lll(attn.flatten(2)))
