@@ -3,7 +3,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 
-class PatchEmbedding(nn.Module):
+class PatchEmbedding(nn.Module): # Done
     def __init__(self, img_size:int, patch_size:int, in_chans:int=3, emb_dim:int=48):
         """
         img_size: 1d size of each image (32 for CIFAR-10)
@@ -45,15 +45,6 @@ class TransformerEncoder(nn.Module): # Done
             nn.Linear(mlp_hidden_dim, input_dim),
             nn.GELU(),
         )
-        # Position-wise Feed-Forward Networks (same as one in NLP Transformer model)
-        '''
-        self.mlp = nn.Sequential(
-            nn.Linear(input_dim, mlp_hidden_dim),
-            nn.ReLU(),
-            nn.Linear(mlp_hidden_dim, input_dim)
-        )
-        # MLP using GELU
-        '''
 
     def forward(self, input):
         out = self.msa(self.norm1(input)) + input # add residual connection
