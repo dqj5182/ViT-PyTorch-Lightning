@@ -74,12 +74,14 @@ class MultiHeadSelfAttention(nn.Module):
         batch, num_token, emb_dim = input.size() # batch: batch, num_token: number of words (or patches), emb_dim: embedding (feature) dimensions, [b, n, f]
         
         # Linear Layer for Value, Key, Query
-        query = self.ll_query(input).view(batch, num_token, self.num_head, self.input_dim//self.num_head).transpose(1,2)
-        key = self.ll_key(input).view(batch, num_token, self.num_head, self.input_dim//self.num_head).transpose(1,2)
-        value = self.ll_value(input).view(batch, num_token, self.num_head, self.input_dim//self.num_head).transpose(1,2)
+        query = self.ll_query(input).view(batch, num_token, self.num_head, self.input_dim//self.num_head).transpose(1,2) # [batch, self.num_head, num_token, self.input_dim//self.num_head]
+        key = self.ll_key(input).view(batch, num_token, self.num_head, self.input_dim//self.num_head).transpose(1,2) # [batch, self.num_head, num_token, self.input_dim//self.num_head]
+        value = self.ll_value(input).view(batch, num_token, self.num_head, self.input_dim//self.num_head).transpose(1,2) # [batch, self.num_head, num_token, self.input_dim//self.num_head]
 
         # Scaled Dot-Product Attention
-        score = F.softmax(torch.einsum("bhif, bhjf->bhij", query, key)/self.sqrt_dim, dim=-1) #(b,h,n,n)
+        score = F.softmax(torch.einsum("bhtf, bhjf->bhtj", query, key)/self.sqrt_dim, dim=-1) #(b,h,n,n)
         attn = torch.einsum("bhij, bhjf->bihf", score, value) #(b,n,h,f//h)
+
+        # Concat and Linear
         out = self.dropout(self.lll(attn.flatten(2)))
         return out
