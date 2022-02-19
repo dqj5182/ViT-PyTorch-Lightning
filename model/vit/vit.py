@@ -30,7 +30,7 @@ class ViT(nn.Module):
         )
 
     def forward(self, x):
-        out = self._to_words(x)
+        out = self.images_to_words(x)
         out = self.lpfp(out)
         if self.is_cls_token:
             out = torch.cat([self.cls_token.repeat(out.size(0),1,1), out],dim=1)
@@ -43,10 +43,11 @@ class ViT(nn.Module):
         out = self.mlp_head(out)
         return out
 
-    def _to_words(self, x):
+    def images_to_words(self, x):
         """
         b: batch, c: color, h: height, w: width, n: number of words in a sentence, f: feature (embbeding dim)
         (b, c, h, w) -> (b, n, f)
+        
         """
         out = x.unfold(2, self.patch_size, self.patch_size).unfold(3, self.patch_size, self.patch_size).permute(0,2,3,4,5,1)
         out = out.reshape(x.size(0), self.num_patch_1d**2 ,-1)
