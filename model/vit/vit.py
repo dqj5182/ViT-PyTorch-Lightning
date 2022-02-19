@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
 
-from model.vit.layers import TransformerEncoder
+from model.vit.layers import PatchEmbedding, TransformerEncoder
 
 class ViT(nn.Module):
     def __init__(self, in_c:int=3, num_classes:int=10, img_size:int=32, num_patch_1d:int=8, dropout:float=0., num_enc_layers:int=7, hidden_dim:int=384, mlp_hidden_dim:int=384*4, num_head:int=8, is_cls_token:bool=True):
@@ -12,8 +12,14 @@ class ViT(nn.Module):
         flattened_patch_dim = (img_size//self.num_patch_1d)**2*3 # 48 # Flattened vec length for each patch (4 x 4 x 3, each side is 4 and 3 color scheme)
         num_tokens = (self.num_patch_1d**2)+1 if self.is_cls_token else (self.num_patch_1d**2) # number of total patches + 1 (class token), 10 in the paper, 65 in this experiment
 
+        # Divide each image into patches
+        self.images_to_patches = PatchEmbedding(
+                                    img_size=img_size, 
+                                    patch_size=img_size//num_patch_1d
+                                )
+
         # Linear Projection of Flattened Patches
-        self.lpfp = nn.Linear(flattened_patch_dim, hidden_dim)
+        self.lpfp = nn.Linear(flattened_patch_dim, hidden_dim) # 48 x 384
 
         # Patch + Position Embedding
         self.cls_token = nn.Parameter(torch.randn(1, 1, hidden_dim)) if is_cls_token else None # learnable classification token with dim [1, 1, 384]. 1 in 2nd dim because there is only one class per each image not each patch
@@ -30,25 +36,20 @@ class ViT(nn.Module):
         )
 
     def forward(self, x):
-        out = self.images_to_words(x)
+        # Images into Patches (including flattening)
+        out = self.images_to_patches(x)
+        # Linear Projection on Flattened Pathces
         out = self.lpfp(out)
+        # Add Class Token and Positional Embedding
         if self.is_cls_token:
             out = torch.cat([self.cls_token.repeat(out.size(0),1,1), out],dim=1)
         out = out + self.pos_emb
+        # Transformer Encoder
         out = self.enc(out)
         if self.is_cls_token:
             out = out[:,0]
         else:
             out = out.mean(1)
+        # MLP Head
         out = self.mlp_head(out)
-        return out
-
-    def images_to_words(self, x):
-        """
-        b: batch, c: color, h: height, w: width, n: number of words in a sentence, f: feature (embbeding dim)
-        (b, c, h, w) -> (b, n, f)
-        
-        """
-        out = x.unfold(2, self.patch_size, self.patch_size).unfold(3, self.patch_size, self.patch_size).permute(0,2,3,4,5,1)
-        out = out.reshape(x.size(0), self.num_patch_1d**2 ,-1)
         return out

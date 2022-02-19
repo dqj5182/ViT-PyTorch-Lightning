@@ -3,6 +3,34 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 
+class PatchEmbedding(nn.Module):
+    def __init__(self, img_size:int, patch_size:int, in_chans:int=3, emb_dim:int=48):
+        """
+        img_size: 1d size of each image (32 for CIFAR-10)
+        patch_size: 1d size of each patch (img_size/num_patch_1d, 4 in this experiment)
+        in_chans: input channel (3 for RGB images)
+        emb_dim: flattened length for each token (or patch)
+        """
+        super(PatchEmbedding, self).__init__()
+        self.img_size = img_size
+        self.patch_size = patch_size
+
+        self.proj = nn.Conv2d(
+            in_chans, 
+            emb_dim, 
+            kernel_size = patch_size, 
+            stride = patch_size
+        )
+
+    def forward(self, x):
+        with torch.no_grad():
+            # x: [batch, in_chans, img_size, img_size]
+            x = self.proj(x) # [batch, embed_dim, # of patches in a row, # of patches in a col], [batch, 48, 8, 8] in this experiment
+            x = x.flatten(2) # [batch, embed_dim, total # of patches], [batch, 48, 64] in this experiment
+            x = x.transpose(1, 2) # [batch, total # of patches, emb_dim] => Transformer encoder requires this dimensions [batch, number of words, word_emb_dim]
+        return x
+
+
 class TransformerEncoder(nn.Module): # Done
     def __init__(self, input_dim:int, mlp_hidden_dim:int, num_head:int=8, dropout:float=0.):
         # input_dim and head for Multi-Head Attention
