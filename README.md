@@ -1,4 +1,4 @@
-# VIT_CNN_CIFAR_10: Implementation for CIFAR-10 challenge with Vision Transformer Model (compared with CNN based Models) on PyTorch Lightning
+## VIT_CNN_CIFAR_10: Implementation for CIFAR-10 challenge with Vision Transformer Model (compared with CNN based Models) on PyTorch Lightning
 
 Folder Structure
 ```bash
