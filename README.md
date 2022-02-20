@@ -72,7 +72,7 @@ PyTorch Lightning is an open-source Python library that provides a high-level in
 </br>
 Please visit [YouTube tutorial for PyTorch Lightning](https://youtu.be/Hgg8Xy6IRig) by [Python Engineer](https://www.youtube.com/channel/UCbXgNpp0jedKWcQiULLbDTA) for interactive tutorial</br>
 Please visit [Official PyTorch Lightning Webpage](https://www.pytorchlightning.ai/) for detailed implementations and documentations
-
+</br>
 
 ## Reference
 Many of the codes for VIT models, training, and testing are from [ViT-CIFAR repo](https://github.com/omihub777/ViT-CIFAR) by [omihub777](https://github.com/omihub777)</br>
