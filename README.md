@@ -75,7 +75,6 @@ VGG-11 | [Google Drive](https://drive.google.com/file/d/1h4C4WQHqVhGOHKyCkk41unA
 PyTorch Lightning is an open-source Python library that provides a high-level interface for PyTorch. It is a lightweight and high-performance framework that organizes PyTorch code to decouple the research from the engineering, making deep learning experiments easier to read and reproduce. It is designed to create scalable deep learning models that can easily run on distributed hardware while keeping the models hardware agnostic.</br>
 </br>
 Please visit [YouTube tutorial for PyTorch Lightning](https://youtu.be/Hgg8Xy6IRig) by [Python Engineer](https://www.youtube.com/channel/UCbXgNpp0jedKWcQiULLbDTA) for interactive tutorial
-
 </br>
 Please visit [Official PyTorch Lightning Webpage](https://www.pytorchlightning.ai/) for detailed implementations and documentations
 </br>
