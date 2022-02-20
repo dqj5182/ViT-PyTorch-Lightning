@@ -66,6 +66,12 @@ VGG-11 | [Google Drive](https://drive.google.com/file/d/1h4C4WQHqVhGOHKyCkk41unA
 
 </br>
 
+## PyTorch Lightning
+PyTorch Lightning is an open-source Python library that provides a high-level interface for PyTorch, a popular deep learning framework.[1] It is a lightweight and high-performance framework that organizes PyTorch code to decouple the research from the engineering, making deep learning experiments easier to read and reproduce. It is designed to create scalable deep learning models that can easily run on distributed hardware while keeping the models hardware agnostic.</br>
+</br>
+[YouTube tutorial for PyTorch Lightning](https://youtu.be/Hgg8Xy6IRig) by [Python Engineer](https://www.youtube.com/channel/UCbXgNpp0jedKWcQiULLbDTA)</br>
+Please visit [Official PyTorch Lightning Webpage](https://www.pytorchlightning.ai/) for detailed implementations and documentations
+
 
 ## Reference
 Many of the codes for VIT models, training, and testing are from [ViT-CIFAR repo](https://github.com/omihub777/ViT-CIFAR) by [omihub777](https://github.com/omihub777)</br>
