@@ -26,6 +26,12 @@ Folder Structure
 └── setup.sh           
 ```
 
+Before starting:
+```
+bash setup.sh
+```
+</br>
+
 Train the any model with CIFAR-10 dataset:
 ```
 CUDA_VISIBLE_DEVICES=0 python main.py --dataset c10 --label-smoothing --autoaugment --model-name [name of the model]
