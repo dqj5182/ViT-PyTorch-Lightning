@@ -26,7 +26,7 @@ Folder Structure
 └── setup.sh           
 ```
 
-Before starting:
+Before starting (Install packages):
 ```
 bash setup.sh
 ```
