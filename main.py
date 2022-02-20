@@ -134,8 +134,6 @@ class VITClassifier(pl.LightningModule):
         print("[INFO] LOG IMAGE!!!")
 
 
-
-
 # CNN based Models (i.e., ResNet, VGG): Training, Validation, and Testing with PyTorch Lightning Module
 class CNNClassifier(pl.LightningModule):
     def __init__(self, hparams):
@@ -206,8 +204,6 @@ class CNNClassifier(pl.LightningModule):
         grid = torchvision.utils.make_grid(image, nrow=4)
         self.logger.experiment.log_image(grid.permute(1,2,0))
         print("[INFO] LOG IMAGE!!!")
-
-
 
 
 # MAIN CODE
