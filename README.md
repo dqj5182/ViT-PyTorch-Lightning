@@ -1,4 +1,4 @@
-# SNU_CV_VIT_CIFAR
+# VIT_CNN_CIFAR_10
 
 Folder Structure
 ```bash
