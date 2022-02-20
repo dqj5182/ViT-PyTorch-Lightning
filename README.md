@@ -32,19 +32,19 @@ bash setup.sh
 ```
 </br>
 
-Train the any model with CIFAR-10 dataset:
+[General Option] Train the any model with CIFAR-10 dataset:
 ```
 CUDA_VISIBLE_DEVICES=0 python main.py --dataset c10 --label-smoothing --autoaugment --model-name [name of the model]
 ```
 </br>
 
-Train VIT model with CIFAR-10 dataset (default):
+[Option VIT] Train VIT model with CIFAR-10 dataset (default):
 ```
 CUDA_VISIBLE_DEVICES=0 python main.py --dataset c10 --label-smoothing --autoaugment
 ```
 </br>
 
-Train ResNet model with CIFAR-10 dataset:
+[Option ResNet] Train ResNet model with CIFAR-10 dataset:
 ```
 CUDA_VISIBLE_DEVICES=0 python main.py --dataset c10 --label-smoothing --autoaugment --model-name resnet
 ```
