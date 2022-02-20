@@ -13,7 +13,6 @@ from utils.utils import get_model, get_dataset, get_experiment_name, get_criteri
 from utils.dataaug import CutMix, MixUp
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--api-key", help="API Key for Comet.ml")
 parser.add_argument("--dataset", default="c10", type=str, help="[c10, c100, svhn]")
 parser.add_argument("--num-classes", default=10, type=int)
 parser.add_argument("--model-name", default="vit", help="[vit]", type=str)
@@ -38,7 +37,7 @@ parser.add_argument("--rcpaste", action="store_true")
 parser.add_argument("--cutmix", action="store_true")
 parser.add_argument("--mixup", action="store_true")
 parser.add_argument("--dropout", default=0.0, type=float)
-parser.add_argument("--head", default=12, type=int)
+parser.add_argument("--head", default=8, type=int)
 parser.add_argument("--num-layers", default=7, type=int)
 parser.add_argument("--hidden", default=384, type=int)
 parser.add_argument("--mlp-hidden", default=384, type=int)

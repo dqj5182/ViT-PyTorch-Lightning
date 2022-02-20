@@ -80,10 +80,13 @@ class MultiHeadSelfAttention(nn.Module):
         """
         Input and Output shape: [batch_size, n_patches + 1, dim]
         """
-        batch_size, n_tokens, dim = x.shape # n_tokens = n_patches + 1 (1 is cls_token)
+        batch_size, n_tokens, x_dim = x.shape # n_tokens = n_patches + 1 (1 is cls_token), x_dim is input dim
 
-        if dim != self.dim: # make sure concatnated dim (output dim) is same as input dim
+        # Sanity Check
+        if x_dim != self.dim: # make sure input dim is same as concatnated dim (output dim)
             raise ValueError
+        if self.dim != self.head_dim*self.n_heads: # make sure dim is divisible by n_heads
+            raise ValueError(f"Input & Output dim should be divisible by Number of Heads")
         
         # Linear Layers for Query, Key, Value
         qkv = self.qkv(x) # (batch_size, n_patches+1, 3*dim)
