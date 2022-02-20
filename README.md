@@ -11,6 +11,7 @@ Folder Structure
 │   ├── efficientnet
 │   ├── efficientnetV2
 │   ├── mobilenetV3
+│   ├── pyramidnet
 │   ├── resnet
 │   ├── resnext
 │   ├── vgg
