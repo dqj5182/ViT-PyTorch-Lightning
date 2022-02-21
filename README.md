@@ -35,19 +35,19 @@ bash setup.sh
 
 [General Option] Train the any model with CIFAR-10 dataset:
 ```
-CUDA_VISIBLE_DEVICES=0 python main.py --dataset c10 --label-smoothing --autoaugment --model-name [name of the model]
+CUDA_VISIBLE_DEVICES=0 python main.py --dataset c10 --label-smoothing --autoaugment --cutmix --mixup --model-name [name of the model]
 ```
 </br>
 
 [Option VIT] Train VIT model with CIFAR-10 dataset (default):
 ```
-CUDA_VISIBLE_DEVICES=0 python main.py --dataset c10 --label-smoothing --autoaugment
+CUDA_VISIBLE_DEVICES=0 python main.py --dataset c10 --label-smoothing --autoaugment --cutmix --mixup
 ```
 </br>
 
 [Option ResNet] Train ResNet model with CIFAR-10 dataset:
 ```
-CUDA_VISIBLE_DEVICES=0 python main.py --dataset c10 --label-smoothing --autoaugment --model-name resnet
+CUDA_VISIBLE_DEVICES=0 python main.py --dataset c10 --label-smoothing --autoaugment --cutmix --mixup --model-name resnet
 ```
 </br>
 CUDA_VISIBLE_DEVICES=0 means that we are assigning GPU0 to be our CUDA device
